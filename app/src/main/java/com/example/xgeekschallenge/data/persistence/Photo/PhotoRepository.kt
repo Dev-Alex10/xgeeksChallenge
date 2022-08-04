@@ -1,4 +1,4 @@
-package com.example.xgeekschallenge.data.persistence
+package com.example.xgeekschallenge.data.persistence.Photo
 
 import androidx.lifecycle.LiveData
 

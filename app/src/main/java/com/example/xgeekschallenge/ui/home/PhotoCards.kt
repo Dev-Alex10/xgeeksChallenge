@@ -4,9 +4,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -29,16 +32,6 @@ fun PhotoCard(photo: Photo, modifier: Modifier = Modifier) { //add photo : Photo
             .heightIn(min = 180.dp)
             .fillMaxWidth()
             .clip(shape = MaterialTheme.shapes.medium)
-//        AsyncImage(
-//            model = ImageRequest.Builder(LocalContext.current)
-//                .data(photo.url)
-//                .crossfade(true)
-//                .build(),
-//            contentDescription = null, // decorative
-//            modifier = imageModifier,
-//            contentScale = ContentScale.Crop,
-//            placeholder = painterResource(id = R.drawable.ic_launcher_foreground)
-//        )
         SubcomposeAsyncImage(
             model = photo.url,
             contentDescription = null,
@@ -46,10 +39,30 @@ fun PhotoCard(photo: Photo, modifier: Modifier = Modifier) { //add photo : Photo
             contentScale = ContentScale.Crop,
         ) {
             val state = painter.state
-            if (state is AsyncImagePainter.State.Loading || state is AsyncImagePainter.State.Error) {
-                CircularProgressIndicator()
-            } else {
-                SubcomposeAsyncImageContent()
+            when (state) {
+                AsyncImagePainter.State.Empty -> Text(text = "Empty")
+                is AsyncImagePainter.State.Loading -> CircularProgressIndicator()
+                is AsyncImagePainter.State.Success -> SubcomposeAsyncImageContent()
+                is AsyncImagePainter.State.Error -> Text(text = state.result.throwable.stackTraceToString())
+            }
+        }
+    }
+}
+
+@Composable
+fun ListPhotos(photos: List<Photo>, modifier: Modifier = Modifier) {
+    Column {
+        Text(
+            modifier = Modifier.padding(16.dp),
+            text = "Cats",
+            style = MaterialTheme.typography.subtitle1
+        )
+        LazyRow(modifier = Modifier.padding(end = 16.dp)) {
+            items(photos) { photo ->
+                PhotoCard(
+                    photo,
+                    Modifier.padding(start = 16.dp, bottom = 16.dp)
+                )
             }
         }
     }
@@ -57,7 +70,7 @@ fun PhotoCard(photo: Photo, modifier: Modifier = Modifier) { //add photo : Photo
 
 @Preview
 @Composable
-fun PhotoCardPreview() {
+private fun PhotoCardPreview() {
     MaterialTheme {
         Surface {
             PhotoCard(
@@ -67,6 +80,20 @@ fun PhotoCardPreview() {
                     "List"
                 )
             )
+        }
+    }
+}
+
+@Preview
+@Composable
+private fun ListPhotoCardPreview() {
+    val photos = listOf(
+        Photo("1", "https://live.staticflickr.com/7372/12502775644_acfd415fa7_w.jpg", "xD"),
+        Photo("2", "https://live.staticflickr.com/65535/52261500552_70231c5eb6.jpg", "Cat")
+    )
+    MaterialTheme {
+        Surface {
+            ListPhotos(photos = photos)
         }
     }
 }
