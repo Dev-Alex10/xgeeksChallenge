@@ -1,4 +1,4 @@
-package com.example.xgeekschallenge
+package com.example.xgeekschallenge.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -18,18 +18,5 @@ class MainActivity : ComponentActivity() {
                 HomeView()
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun DefaultPreview() {
-    XGeeksChallengeTheme {
-        Greeting("Android")
     }
 }
