@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
-fun HomeView(homeViewModel: HomeViewModel = viewModel()) {
+fun HomeScreen(homeViewModel: HomeViewModel = viewModel(), onImageClick: (String) -> Unit) {
     val state = homeViewModel.state.collectAsState().value //"by" to use state directly as ViewState
     val focusManager = LocalFocusManager.current
     Column {
@@ -47,7 +47,8 @@ fun HomeView(homeViewModel: HomeViewModel = viewModel()) {
                     text = if (state.text.any()) {
                         state.text
                     } else
-                        "Recent"
+                        "Recent",
+                    onImageClick = onImageClick
                 )
         }
     }
@@ -59,7 +60,7 @@ fun HomeView(homeViewModel: HomeViewModel = viewModel()) {
 private fun HomeViewPreview() {
     MaterialTheme {
         Surface {
-            HomeView()
+            HomeScreen(onImageClick = {})
         }
     }
 }

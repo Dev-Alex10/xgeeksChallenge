@@ -65,7 +65,7 @@ class HomeViewModel : ViewModel() {
             WebClient.client.fetchRecentImages()
         } else
             WebClient.client.fetchImages(searchTerm)
-        return searchResponse.requestMetaData.photos.map(PhotoResponse::toDomain)
+        return searchResponse.requestMetaData.photosInfo.map(PhotoResponse::toDomain)
 //            .onEach { println(it.url) }
     }
 

@@ -10,16 +10,12 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.ColorPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -30,13 +26,25 @@ import coil.request.ImageRequest
 import com.example.xgeekschallenge.data.model.Photo
 
 @Composable
-fun PhotoCard(photo: Photo, modifier: Modifier = Modifier) { //add photo : Photo
-    val imageModifier = Modifier
-        .heightIn(min = 300.dp, max = 360.dp)
-        .widthIn(max = 400.dp)
+fun PhotoCard(
+    photo: Photo,
+    modifier: Modifier = Modifier
+) {
+    val imageModifier = modifier
+        .heightIn(min = 300.dp, max = 450.dp)
+        .widthIn(max = 500.dp)
         .fillMaxWidth()
+        .fillMaxHeight()
         .clip(shape = MaterialTheme.shapes.medium)
-        .clickable { }
+//        .clickable {
+//            Toast
+//                .makeText(
+//                    LocalContext.current,
+//                    DateTimeFormatter.ISO_INSTANT.format(Instant.ofEpochSecond(photo.metaData[0].toLong())),
+//                    Toast.LENGTH_LONG
+//                )
+//                .show()
+//        }
 
     SubcomposeAsyncImage(
         model = ImageRequest.Builder(LocalContext.current)
@@ -45,7 +53,7 @@ fun PhotoCard(photo: Photo, modifier: Modifier = Modifier) { //add photo : Photo
             .build(),
         contentDescription = null,
         modifier = imageModifier,
-        contentScale = ContentScale.Crop
+        contentScale = ContentScale.FillBounds
     ) {
         when (painter.state) {
             AsyncImagePainter.State.Empty -> Text(text = "Empty")
@@ -61,7 +69,11 @@ fun PhotoCard(photo: Photo, modifier: Modifier = Modifier) { //add photo : Photo
 }
 
 @Composable
-fun ListPhotos(photos: List<Photo>, text: String = "Search result") {
+fun ListPhotos(
+    photos: List<Photo>,
+    text: String = "Search result",
+    onImageClick: (String) -> Unit
+) {
     Column {
         Text(
             modifier = Modifier
@@ -76,7 +88,10 @@ fun ListPhotos(photos: List<Photo>, text: String = "Search result") {
         ) {
             items(photos) { photo ->
                 PhotoCard(
-                    photo
+                    photo = photo,
+                    modifier = Modifier.clickable {
+                        onImageClick(photo.url)
+                    }
                 )
             }
         }
@@ -92,7 +107,8 @@ private fun PhotoCardPreview() {
                 Photo(
                     "1",
                     "https://live.staticflickr.com/7372/12502775644_acfd415fa7_w.jpg",
-                    "List"
+                    "List",
+                    emptyList()
                 )
             )
         }
@@ -103,12 +119,18 @@ private fun PhotoCardPreview() {
 @Composable
 private fun ListPhotoCardPreview() {
     val photos = listOf(
-        Photo("1", "https://live.staticflickr.com/7372/12502775644_acfd415fa7_w.jpg", "xD"),
-        Photo("2", "https://live.staticflickr.com/65535/52261500552_70231c5eb6.jpg", "Cat")
+        Photo(
+            "1", "https://live.staticflickr.com/7372/12502775644_acfd415fa7_w.jpg", "xD",
+            emptyList()
+        ),
+        Photo(
+            "2", "https://live.staticflickr.com/65535/52261500552_70231c5eb6.jpg", "Cat",
+            emptyList()
+        )
     )
     MaterialTheme {
         Surface {
-            ListPhotos(photos = photos)
+            ListPhotos(photos = photos, onImageClick = {})
         }
     }
 }

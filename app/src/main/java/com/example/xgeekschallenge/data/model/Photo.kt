@@ -6,7 +6,8 @@ import com.google.gson.annotations.SerializedName
 data class Photo(
     val id: String,
     val url: String,
-    val title: String
+    val title: String,
+    val metaData: List<String>
 )
 
 data class PhotosSearchResponse(
@@ -19,40 +20,36 @@ data class RequestMetaData(
     @SerializedName("page")
     val page: Int,
     @SerializedName("photo")
-    val photos: List<PhotoResponse>
+    val photosInfo: List<PhotoResponse>
 )
 
 //array in response without the is public/friend/family, because all we can use are public
 data class PhotoResponse(
     @SerializedName("id")
     val id: String,
-    @SerializedName("owner")
-    val owner: String,
     @SerializedName("secret")
     val secret: String,
     @SerializedName("server")
     val server: String,
     @SerializedName("title")
-    val title: String
-)
-
-data class PhotoMetaData(
-    @SerializedName("id")
-    val id: String,
-    @SerializedName("secret")
-    val secret: String,
-    @SerializedName("server")
-    val server: String,
-    @SerializedName("dateuploaded")
+    val title: String,
+    @SerializedName("dateupload")
     val dateUploaded: String,
-    @SerializedName("originalformat")
-    val originalFormat: String
+    @SerializedName("datetaken")
+    val dateTaken: String,
+    @SerializedName("owner_name")
+    val owner: String,
+    @SerializedName("o_width")
+    val width: String,
+    @SerializedName("o_height")
+    val height: String
 )
 
 fun PhotoResponse.toDomain(): Photo {
     return Photo(
         id = id,
-        url = "https://live.staticflickr.com/${server}/${id}_${secret}.jpg",
-        title = title
+        url = "https://live.staticflickr.com/${server}/${id}_${secret}.jpg",//no _size its the default max edge 500px
+        title = title,
+        metaData = listOf(dateUploaded, dateTaken, owner, width, height)
     )
 }
