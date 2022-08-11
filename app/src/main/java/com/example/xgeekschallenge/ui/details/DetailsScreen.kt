@@ -44,7 +44,7 @@ fun DetailsScreen(
         .fillMaxWidth()
         .fillMaxHeight()
         .clip(shape = MaterialTheme.shapes.large)
-    val listPhotoMetadata = metadataFormatter(photoMetadata)
+    val listPhotoMetadata = metadataFormatter("$photoMetadata, $photoUrl")
 
     Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
         AnimatedVisibility(visible = !visible) {
@@ -109,12 +109,12 @@ private fun metadataFormatter(photoMetadata: String): List<String> {
     val owner = "Owner Name: ${listPhotoMetadata[2]}"
     var width = listPhotoMetadata[3]
     var height = listPhotoMetadata[4].substringBefore("]")
-
+    val url = "Url: ${listPhotoMetadata[5]}"
     width = checkNull(varCheck = width, text = "Width")
     height = checkNull(varCheck = height, text = "Height")
     width = "Width: $width"
     height = "Height: $height"
-    listPhotoMetadata = listOf(extendedDateUploaded, dateTaken, owner, width, height)
+    listPhotoMetadata = listOf(extendedDateUploaded, dateTaken, owner, width, height, url)
 
     return listPhotoMetadata
 }
