@@ -15,21 +15,21 @@ import java.nio.charset.StandardCharsets
 fun PhotoNavHost(navController: NavHostController, modifier: Modifier) {
     NavHost(navController = navController, startDestination = Home.route, modifier = modifier) {
         composable(route = Home.route) {
-            HomeScreen(onImageClick = { photoUrl ->
+            HomeScreen(onImageClick = { photo ->
                 navController.navigateToSinglePhoto(
-                    URLEncoder.encode(
-                        photoUrl,
-                        StandardCharsets.UTF_8.toString()
-                    ) //to recognize the url it needs to be encoded
+                    photoUrl = URLEncoder.encode(photo.first(), StandardCharsets.UTF_8.toString()),
+                    photoMetadata = photo.last()
                 )
             })
+//          // to recognize the url it needs to be encoded
         }
         composable(
             route = Details.routeWithArgs,
             arguments = Details.arguments
         ) {
-            val photoUrl = it.arguments?.getString(Details.photoUrlArg)
-            DetailsScreen(photoUrl = photoUrl)
+            val photoMetadata = it.arguments?.getString(Details.photoMetadataArg)!!
+            val photoUrl = it.arguments?.getString(Details.photoUrlArg)!!
+            DetailsScreen(photoUrl = photoUrl, photoMetadata = photoMetadata)
         }
     }
 }
@@ -44,6 +44,6 @@ fun NavHostController.navigateSingleTopTo(route: String) {
     }
 }
 
-private fun NavHostController.navigateToSinglePhoto(photoUrl: String) {
-    this.navigateSingleTopTo("${Details.route}/$photoUrl")
+private fun NavHostController.navigateToSinglePhoto(photoUrl: String, photoMetadata: String) {
+    this.navigateSingleTopTo("${Details.route}/$photoUrl/$photoMetadata")
 }

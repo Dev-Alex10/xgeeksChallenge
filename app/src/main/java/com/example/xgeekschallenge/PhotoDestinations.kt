@@ -14,8 +14,11 @@ object Home : PhotoDestination {
 object Details : PhotoDestination {
     override val route = "details"
     const val photoUrlArg = "photo_url"
-    val routeWithArgs = "${route}/{${photoUrlArg}}"
+    const val photoMetadataArg = "photo_metadata"
+    val routeWithArgs = "${route}/{$photoUrlArg}/{$photoMetadataArg}"
     val arguments = listOf(navArgument(photoUrlArg) {//arguments for additional safety
+        type = NavType.StringType
+    }, navArgument(photoMetadataArg) {
         type = NavType.StringType
     })
 }

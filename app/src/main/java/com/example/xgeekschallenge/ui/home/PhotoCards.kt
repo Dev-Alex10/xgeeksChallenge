@@ -1,5 +1,6 @@
 package com.example.xgeekschallenge.ui.home
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -12,10 +13,9 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.ColorPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -23,6 +23,7 @@ import coil.compose.AsyncImagePainter
 import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
 import coil.request.ImageRequest
+import com.example.xgeekschallenge.R
 import com.example.xgeekschallenge.data.model.Photo
 
 @Composable
@@ -31,7 +32,7 @@ fun PhotoCard(
     modifier: Modifier = Modifier
 ) {
     val imageModifier = modifier
-        .heightIn(min = 300.dp, max = 450.dp)
+        .heightIn(min = 300.dp, max = 400.dp)
         .widthIn(max = 500.dp)
         .fillMaxWidth()
         .fillMaxHeight()
@@ -45,9 +46,9 @@ fun PhotoCard(
 //                )
 //                .show()
 //        }
-
+    val context = LocalContext.current
     SubcomposeAsyncImage(
-        model = ImageRequest.Builder(LocalContext.current)
+        model = ImageRequest.Builder(context)
             .data(photo.url)
             .crossfade(true)
             .build(),
@@ -55,14 +56,23 @@ fun PhotoCard(
         modifier = imageModifier,
         contentScale = ContentScale.FillBounds
     ) {
-        when (painter.state) {
+        when (val state = painter.state) {
             AsyncImagePainter.State.Empty -> Text(text = "Empty")
             is AsyncImagePainter.State.Loading -> CircularProgressIndicator()
             is AsyncImagePainter.State.Success -> SubcomposeAsyncImageContent()
             is AsyncImagePainter.State.Error ->
                 Image(
-                    painter = ColorPainter(Color.Black),
-                    contentDescription = null
+                    painter = painterResource(id = R.drawable.error),
+                    contentDescription = null,
+                    Modifier.clickable {
+                        Toast
+                            .makeText(
+                                context,
+                                "We're sorry an error occurred -> ${state.result.throwable.message}",
+                                Toast.LENGTH_LONG
+                            )
+                            .show()
+                    }
                 )
         }
     }
@@ -72,7 +82,7 @@ fun PhotoCard(
 fun ListPhotos(
     photos: List<Photo>,
     text: String = "Search result",
-    onImageClick: (String) -> Unit
+    onImageClick: (List<String>) -> Unit
 ) {
     Column {
         Text(
@@ -90,7 +100,7 @@ fun ListPhotos(
                 PhotoCard(
                     photo = photo,
                     modifier = Modifier.clickable {
-                        onImageClick(photo.url)
+                        onImageClick(listOf(photo.url, photo.metaData.toString()))
                     }
                 )
             }
@@ -108,7 +118,7 @@ private fun PhotoCardPreview() {
                     "1",
                     "https://live.staticflickr.com/7372/12502775644_acfd415fa7_w.jpg",
                     "List",
-                    emptyList()
+                    ArrayList()
                 )
             )
         }
@@ -121,11 +131,11 @@ private fun ListPhotoCardPreview() {
     val photos = listOf(
         Photo(
             "1", "https://live.staticflickr.com/7372/12502775644_acfd415fa7_w.jpg", "xD",
-            emptyList()
+            ArrayList()
         ),
         Photo(
             "2", "https://live.staticflickr.com/65535/52261500552_70231c5eb6.jpg", "Cat",
-            emptyList()
+            ArrayList()
         )
     )
     MaterialTheme {
