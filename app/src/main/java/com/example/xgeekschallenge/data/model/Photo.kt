@@ -37,7 +37,7 @@ data class PhotoResponse(
     val dateUploaded: String,
     @SerializedName("datetaken")
     val dateTaken: String,
-    @SerializedName("owner_name")
+    @SerializedName("ownername")
     val owner: String,
     @SerializedName("o_width")
     val width: String,

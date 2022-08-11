@@ -7,11 +7,11 @@ import retrofit2.http.Query
 
 interface PhotosAPI {
     //type 6 = photos and other
-    @GET("?method=flickr.photos.search&format=json&safe_search=1&content_type=6&nojsoncallback=1&api_key=$API_KEY&extras=date_upload,date_taken,original_format,owner_name")
+    @GET("?method=flickr.photos.search&format=json&safe_search=1&content_type=6&nojsoncallback=1&api_key=$API_KEY&extras=date_upload,date_taken,o_dims,owner_name")
     suspend fun fetchImages(@Query(value = "text") searchTerm: String): PhotosSearchResponse
 
     //nojsoncallback = object not starting with FlickrApi
-    @GET("?method=flickr.photos.getRecent&format=json&nojsoncallback=1&api_key=$API_KEY&extras=date_upload,date_taken,original_format,owner_name")
+    @GET("?method=flickr.photos.getRecent&format=json&nojsoncallback=1&api_key=$API_KEY&extras=date_upload,date_taken,o_dims,owner_name")
     suspend fun fetchRecentImages(): PhotosSearchResponse
 
 }

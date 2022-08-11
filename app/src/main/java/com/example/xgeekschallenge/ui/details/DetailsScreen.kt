@@ -19,7 +19,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImagePainter
@@ -45,28 +44,9 @@ fun DetailsScreen(
         .fillMaxWidth()
         .fillMaxHeight()
         .clip(shape = MaterialTheme.shapes.large)
-    var listPhotoMetadata = photoMetadata.split(",")
-
-    val dateUploaded = "Date Uploaded: " + DateTimeFormatter.ISO_INSTANT.format(
-        Instant.ofEpochSecond(
-            listPhotoMetadata[0].substringAfter("[").toLong()
-        )
-    )
-    val dateTaken = "Date Taken: " + listPhotoMetadata[1]
-    var owner = listPhotoMetadata[2]
-    var width = listPhotoMetadata[3]
-    var height = listPhotoMetadata[4].substringBefore("]")
-    owner = checkNull(varCheck = owner, text = "Owner")
-    width = checkNull(varCheck = width, text = "Width")
-    height = checkNull(varCheck = height, text = "Height")
-    owner = "Owner: $owner"
-    width = "Owner: $width"
-    height = "Owner: $height"
-    listPhotoMetadata = listOf(dateUploaded, dateTaken, owner, width, height)
+    val listPhotoMetadata = metadataFormatter(photoMetadata)
 
     Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
-
-//        Row(horizontalArrangement = Arrangement.Center) {
         AnimatedVisibility(visible = !visible) {
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -75,14 +55,12 @@ fun DetailsScreen(
                 items(listPhotoMetadata) { photoMetadata ->
                     Text(
                         text = photoMetadata,
-                        textAlign = TextAlign.Center,
                         modifier = Modifier
                             .clickable {
                                 visible = !visible
                             })
                 }
             }
-//        }
         }
         AnimatedVisibility(visible = visible) {
             val context = LocalContext.current
@@ -121,6 +99,40 @@ fun DetailsScreen(
             }
         }
     }
+}
+
+@Composable
+private fun metadataFormatter(photoMetadata: String): List<String> {
+    var listPhotoMetadata = photoMetadata.split(",")
+    val extendedDateUploaded = dateFormatter(listPhotoMetadata)
+    val dateTaken = "Date Taken: ${listPhotoMetadata[1]}"
+    val owner = "Owner Name: ${listPhotoMetadata[2]}"
+    var width = listPhotoMetadata[3]
+    var height = listPhotoMetadata[4].substringBefore("]")
+
+    width = checkNull(varCheck = width, text = "Width")
+    height = checkNull(varCheck = height, text = "Height")
+    width = "Width: $width"
+    height = "Height: $height"
+    listPhotoMetadata = listOf(extendedDateUploaded, dateTaken, owner, width, height)
+
+    return listPhotoMetadata
+}
+
+@SuppressLint("NewApi")
+@Composable
+private fun dateFormatter(listPhotoMetadata: List<String>): String {
+    val dateUploaded = DateTimeFormatter.ISO_INSTANT.format(
+        Instant.ofEpochSecond(
+            listPhotoMetadata[0].substringAfter("[").toLong()
+        )
+    ).substringBefore("T")
+    val timeUploaded = DateTimeFormatter.ISO_INSTANT.format(
+        Instant.ofEpochSecond(
+            listPhotoMetadata[0].substringAfter("[").toLong()
+        )
+    ).substringBefore("Z").substringAfter("T")
+    return "Date Uploaded: $dateUploaded $timeUploaded"
 }
 
 @Composable
