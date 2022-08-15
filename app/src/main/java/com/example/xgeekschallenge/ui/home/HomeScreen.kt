@@ -15,9 +15,10 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.xgeekschallenge.data.model.Photo
 
 @Composable
-fun HomeScreen(homeViewModel: HomeViewModel = viewModel(), onImageClick: (List<String>) -> Unit) {
+fun HomeScreen(homeViewModel: HomeViewModel = viewModel(), onImageClick: (Photo) -> Unit) {
     val state = homeViewModel.state.collectAsState().value //"by" to use state directly as ViewState
     val focusManager = LocalFocusManager.current
     Column {

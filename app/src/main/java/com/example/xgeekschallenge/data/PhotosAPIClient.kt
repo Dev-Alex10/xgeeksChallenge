@@ -1,8 +1,5 @@
 package com.example.xgeekschallenge.data
 
-import android.util.Log
-import com.example.xgeekschallenge.data.cb.DataRetriever
-import com.example.xgeekschallenge.data.model.PhotosSearchResponse
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
@@ -25,7 +22,7 @@ object WebClient {
             )
             .client(
                 OkHttpClient.Builder().connectTimeout(
-                    CONNECTION_TIMEOUT_MS,
+                    CONNECTION_TIMEOUT_S,
                     TimeUnit.SECONDS
                 ).addInterceptor(HttpLoggingInterceptor().apply {
                     level = HttpLoggingInterceptor.Level.BASIC

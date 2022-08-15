@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">xGeeksChallenge</string>
+    <string name="photo_url">Url: %s \n</string>
+    <string name="photo_detail_date_uploaded">Date Uploaded: %s \n</string>
+    <string name="photo_detail_date_taken">Date Taken: %s\n</string>
+    <string name="photo_detail_owner">Owner: %s\n</string>
+    <string name="photo_detail_size">Size: %s x %s\n</string>
+    <string name="width_unavailable">Width unavailable</string>
+    <string name="height_unavailable">Height unavailable</string>
 </resources>

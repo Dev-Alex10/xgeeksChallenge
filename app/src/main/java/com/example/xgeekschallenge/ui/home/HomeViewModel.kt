@@ -66,7 +66,7 @@ class HomeViewModel : ViewModel() {
         } else
             WebClient.client.fetchImages(searchTerm)
         return searchResponse.requestMetaData.photosInfo.map(PhotoResponse::toDomain)
-            .onEach { println(it.metaData) }
+//            .onEach { println(it.metaData) }
     }
 
 }

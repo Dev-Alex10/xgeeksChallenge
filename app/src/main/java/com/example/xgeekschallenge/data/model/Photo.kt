@@ -1,14 +1,21 @@
 package com.example.xgeekschallenge.data.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
 //will be needed to show the photo on layout
+@Parcelize
 data class Photo(
     val id: String,
     val url: String,
     val title: String,
-    val metaData: List<String>
-)
+    val dateUploaded: String,
+    val dateTaken: String,
+    val owner: String,
+    val width: String?,
+    val height: String?
+) : Parcelable
 
 data class PhotosSearchResponse(
     @SerializedName("photos") //API name
@@ -50,6 +57,10 @@ fun PhotoResponse.toDomain(): Photo {
         id = id,
         url = "https://live.staticflickr.com/${server}/${id}_${secret}.jpg",//no _size its the default max edge 500px
         title = title,
-        metaData = listOf(dateUploaded, dateTaken, owner, width, height)
+        dateUploaded = dateUploaded,
+        dateTaken = dateTaken,
+        owner = owner,
+        width = width,
+        height = height
     )
 }
