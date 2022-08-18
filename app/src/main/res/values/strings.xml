@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">xGeeksChallenge</string>
+    <string name="search_bar">Search Bar</string>
+    <string name="recent">"Recent"</string>
     <string name="photo_url">Url: %s \n</string>
     <string name="photo_detail_date_uploaded">Date Uploaded: %s \n</string>
     <string name="photo_detail_date_taken">Date Taken: %s\n</string>
