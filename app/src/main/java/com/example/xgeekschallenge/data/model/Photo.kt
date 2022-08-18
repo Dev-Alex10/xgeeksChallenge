@@ -55,7 +55,7 @@ data class PhotoResponse(
 fun PhotoResponse.toDomain(): Photo {
     return Photo(
         id = id,
-        url = "https://live.staticflickr.com/${server}/${id}_${secret}.jpg",//no _size its the default max edge 500px
+        url = "https://live.staticflickr.com/${server}/${id}_${secret}_b.jpg",//no _size its the default max edge 500px b= 1024px (longest)
         title = title,
         dateUploaded = dateUploaded,
         dateTaken = dateTaken,

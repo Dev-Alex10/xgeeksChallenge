@@ -22,7 +22,6 @@ fun PhotoNavHost(navController: NavHostController, modifier: Modifier) {
                     photo = photo
                 )
             })
-//          // to recognize the url it needs to be encoded
         }
         composable(
             route = Details.routeWithArgs,

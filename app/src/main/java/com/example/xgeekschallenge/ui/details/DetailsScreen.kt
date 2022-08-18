@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -20,7 +19,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImagePainter
 import coil.compose.SubcomposeAsyncImage
@@ -39,8 +37,6 @@ fun DetailsScreen(
         .widthIn(max = 500.dp)
         .fillMaxWidth()
         .clip(shape = MaterialTheme.shapes.large)
-//    val listPhotoMetadata = metadataFormatter("$photoMetadata, $photoUrl")
-
 
     Column(
         verticalArrangement = Arrangement.Center,
@@ -90,16 +86,6 @@ fun DetailsScreen(
                     text = state.metadata
                 )
             }
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun HomeViewPreview() {
-    MaterialTheme {
-        Surface {
-//            DetailsScreen()
         }
     }
 }

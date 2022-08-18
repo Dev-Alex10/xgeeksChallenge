@@ -31,32 +31,4 @@ object WebClient {
             .build()
             .create(PhotosAPI::class.java)
     }
-/*
-    private val apiPhoto by lazy {
-        setup()
-    }
-
-    private fun setup(): PhotosAPI {
-        return Retrofit.Builder().baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create()).build().create()
-    }
-
-    fun getPhotosList(listener: DataRetriever) {
-        apiPhoto.getList().enqueue(object : Callback<List<PhotosSearchResponse>> {
-            override fun onResponse(
-                call: Call<List<PhotosSearchResponse>>,
-                response: Response<List<PhotosSearchResponse>>
-            ) {
-                if (response.isSuccessful) {
-                    Log.d(TAG, "$response")
-                    listener.onDataFetchedSuccess(response.body()!!)
-                }
-            }
-
-            override fun onFailure(call: Call<List<PhotosSearchResponse>>, t: Throwable) {
-                Log.e(TAG, "onFailure: ${t.message}")
-                listener.onDataFetchedFailed()
-            }
-        })
-    }*/
 }

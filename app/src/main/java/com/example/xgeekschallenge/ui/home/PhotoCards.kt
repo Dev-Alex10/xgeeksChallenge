@@ -10,6 +10,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -18,6 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImagePainter
@@ -34,19 +36,8 @@ fun PhotoCard(
 ) {
     val imageModifier = modifier
         .heightIn(min = 300.dp, max = 400.dp)
-        .widthIn(max = 500.dp)
-        .fillMaxWidth()
         .fillMaxHeight()
         .clip(shape = MaterialTheme.shapes.medium)
-//        .clickable {
-//            Toast
-//                .makeText(
-//                    LocalContext.current,
-//                    DateTimeFormatter.ISO_INSTANT.format(Instant.ofEpochSecond(photo.metaData[0].toLong())),
-//                    Toast.LENGTH_LONG
-//                )
-//                .show()
-//        }
     Box(modifier = Modifier.border(3.dp, Color.Black)) {
         val context = LocalContext.current
         SubcomposeAsyncImage(
@@ -113,39 +104,52 @@ fun ListPhotos(
     }
 }
 
-//@Preview
-//@Composable
-//private fun PhotoCardPreview() {
-//    MaterialTheme {
-//        Surface {
-//            PhotoCard(
-//                Photo(
-//                    "1",
-//                    "https://live.staticflickr.com/7372/12502775644_acfd415fa7_w.jpg",
-//                    "List",
-//                    ArrayList()
-//                )
-//            )
-//        }
-//    }
-//}
+@Preview
+@Composable
+private fun PhotoCardPreview() {
+    MaterialTheme {
+        Surface {
+            PhotoCard(
+                Photo(
+                    "1",
+                    "https://live.staticflickr.com/7372/12502775644_acfd415fa7_w.jpg",
+                    "List",
+                    "160",
+                    "s",
+                    "",
+                    "12",
+                    "13"
+                )
+            )
+        }
+    }
+}
 
-//@Preview
-//@Composable
-//private fun ListPhotoCardPreview() {
-//    val photos = listOf(
-//        Photo(
-//            "1", "https://live.staticflickr.com/7372/12502775644_acfd415fa7_w.jpg", "xD",
-//            ArrayList()
-//        ),
-//        Photo(
-//            "2", "https://live.staticflickr.com/65535/52261500552_70231c5eb6.jpg", "Cat","",""
-//            ArrayList()
-//        )
-//    )
-//    MaterialTheme {
-//        Surface {
-//            ListPhotos(photos = photos, onImageClick = {})
-//        }
-//    }
-//}
+@Preview
+@Composable
+private fun ListPhotoCardPreview() {
+    val photos = listOf(
+        Photo(
+            "1",
+            "https://live.staticflickr.com/7372/12502775644_acfd415fa7_w.jpg",
+            "List",
+            "160",
+            "s",
+            "",
+            "12",
+            "13"
+        ),
+        Photo(
+            "2", "https://live.staticflickr.com/65535/52261500552_70231c5eb6.jpg", "Cat", "160",
+            "s",
+            "",
+            "12",
+            "13"
+        )
+    )
+    MaterialTheme {
+        Surface {
+            ListPhotos(photos = photos, onImageClick = {})
+        }
+    }
+}

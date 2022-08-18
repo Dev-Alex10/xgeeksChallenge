@@ -27,5 +27,3 @@ object Details : PhotoDestination {
         return "$route?photoArg=${gson.toJson(photo)}"
     }
 }
-
-val photoScreens = listOf(Home, Details)
