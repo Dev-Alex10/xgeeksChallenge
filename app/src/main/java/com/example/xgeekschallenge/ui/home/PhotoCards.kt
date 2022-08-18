@@ -2,6 +2,7 @@ package com.example.xgeekschallenge.ui.home
 
 import android.widget.Toast
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -65,15 +66,17 @@ fun PhotoCard(
                     Image(
                         painter = painterResource(id = R.drawable.error),
                         contentDescription = null,
-                        Modifier.clickable {
-                            Toast
-                                .makeText(
-                                    context,
-                                    "We're sorry an error occurred -> ${state.result.throwable.message}",
-                                    Toast.LENGTH_LONG
-                                )
-                                .show()
-                        }
+                        modifier = Modifier
+                            .background(Color.White)
+                            .clickable {
+                                Toast
+                                    .makeText(
+                                        context,
+                                        "We're sorry an error occurred -> ${state.result.throwable.message}",
+                                        Toast.LENGTH_LONG
+                                    )
+                                    .show()
+                            }
                     )
             }
         }

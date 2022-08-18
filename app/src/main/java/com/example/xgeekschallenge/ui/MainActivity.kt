@@ -3,8 +3,8 @@ package com.example.xgeekschallenge.ui
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.material.Scaffold
 import com.example.xgeekschallenge.PhotoApp
-import com.example.xgeekschallenge.ui.home.HomeScreen
 import com.example.xgeekschallenge.ui.theme.XGeeksChallengeTheme
 
 class MainActivity : ComponentActivity() {
@@ -12,8 +12,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             XGeeksChallengeTheme {
-                // A surface container using the 'background' color from the theme
-                PhotoApp()
+                Scaffold {
+                    PhotoApp()
+                }
             }
         }
     }

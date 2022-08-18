@@ -35,10 +35,9 @@ fun DetailsScreen(
 
     val state = detailsViewModel.state.collectAsState().value
     val imageModifier = Modifier
-        .heightIn(min = 400.dp, max = 500.dp)
+        .heightIn(min = 100.dp, max = 500.dp)
         .widthIn(max = 500.dp)
         .fillMaxWidth()
-        .fillMaxHeight()
         .clip(shape = MaterialTheme.shapes.large)
 //    val listPhotoMetadata = metadataFormatter("$photoMetadata, $photoUrl")
 
@@ -88,8 +87,7 @@ fun DetailsScreen(
         AnimatedVisibility(visible = !state.visible) {
             SelectionContainer {
                 Text(
-                    text = state.metadata,
-                    modifier = Modifier.clickable { detailsViewModel.changeVisibleState() }
+                    text = state.metadata
                 )
             }
         }
